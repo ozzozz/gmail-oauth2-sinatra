@@ -16,18 +16,22 @@ To get this puppy running you just need to:
 
 then
 
-```G_API_CLIENT=<your_client_id> G_API_SECRET=<your_secret> BASE_URL=<base url(http://.../...)> thin -p <port_number> start```
+    G_API_CLIENT=<your_client_id> G_API_SECRET=<your_secret> BASE_URL=<base URL(https://.../...)> \
+    thin -p <port_number> start
 
-and then head over to http://localhost:<port_number> and click the 'Auth' link
+and then head over to ```http://localhost:<port_number>``` and click the 'Auth' link
 
 ## If you run behind nginx
-```location /oauth2-test {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Forwarded-Server $host;
-    proxy_set_header X-Forwarded-Port $server_port;
-    proxy_set_header Host $http_host;
-  
-    proxy_pass http://127.0.0.1:<thin_port_number>;
-}```
+
+set nginx config as below...
+
+    location /oauth2-test {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-Port $server_port;
+      proxy_set_header Host $http_host;
+     
+      proxy_pass http://127.0.0.1:<port_number>;
+    }
